@@ -1,0 +1,10 @@
+.button {
+    font-size: 1.1rem;
+    border: none;
+    background-color: transparent;
+}
+
+.button:hover {
+    color: orange;
+    border-bottom: 1px solid orange;
+  }
