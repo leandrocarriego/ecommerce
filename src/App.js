@@ -1,17 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-import NavBar from './components/NavBar/NavBar';
-import ItemListContainer from './containers/ItemListContainer/ItemListContainer';
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NavBar from "./components/NavBar/NavBar";
+import Home from "./containers/Home/Home";
+import ItemListContainer from "./containers/ItemListContainer/ItemListContainer";
+import ItemDetailContainer from "./containers/ItemDetailContainer/ItemDetailContainer";
+import Cart from "./components/Cart/Cart";
 
 function App() {
   return (
     <div className="App">
-      {/* <header className="App-header">
-        <NavBar />
-      </header> */}
-      <main>
-        <ItemListContainer greeting="Bienvenidos a mi Ecommerce"/>
-      </main>
+      <header className="App-header">
+        <BrowserRouter>
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/products" element={<ItemListContainer />} />
+            <Route path="/category/:categoryId" element={<ItemListContainer />} />
+            <Route path="/item/:itemId" element={<ItemDetailContainer />} />
+            <Route path="/cart" element={<Cart />} />
+          </Routes>
+        </BrowserRouter>
+      </header>
+     
     </div>
   );
 }
