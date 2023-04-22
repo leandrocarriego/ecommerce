@@ -6,9 +6,9 @@ import ItemListContainer from './containers/ItemListContainer/ItemListContainer'
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      {/* <header className="App-header">
         <NavBar />
-      </header>
+      </header> */}
       <main>
         <ItemListContainer greeting="Bienvenidos a mi Ecommerce"/>
       </main>

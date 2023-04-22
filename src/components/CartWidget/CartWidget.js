@@ -2,7 +2,7 @@ import "./CartWidget.css";
 
 const CartWidget = (props) => {
     return (
-        <i class="bi bi-cart">
+        <i className="bi bi-cart">
             {props.initial}
         </i>
     )
