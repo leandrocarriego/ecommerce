@@ -44,6 +44,7 @@ const ItemListContainer = ({ title }) => {
   if(products && products.length === 0) {
     return <h1>No hay productos</h1>
   }
+  
   return (
     <>
       <h2>{categoryId ? categoryId : title}</h2>
