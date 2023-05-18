@@ -1,26 +1,3 @@
-.card-product {
-    height: 450px;
-    width: 350px;
-    background-color: red;
-}
-
-.title {
-    
-}
-
-.price {
-
-}
-
-.img-container {
-    width: 100%;
-    
-}
-
-.img-container img {
-    object-fit: cover;
-}
-
-.btn-detail {
-
+.card {
+    width: 18rem;
 }
