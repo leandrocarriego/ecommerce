@@ -1,17 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import ItemCount from "../ItemCount/ItemCount";
 import "./Item.css";
 
 const Item = ({ id, name, price, img }) => {
   return (
-    <div className="card my-3">
-      <img className="card-img-top" src={img} alt={name} />
-      <div className="card-body">
-        <h5 className="card-title">{name}</h5>
-        <h6>{`$${price}`}</h6>
+    <div className="card my-3 p-2 vh-100 bg-secondary">
+      <div className="h-50 d-flex justify-content-center align-items-center bg-white">
+        <img className="card-img-top " src={img} alt={name} />
       </div>
-      <div className="card-body">
-        <Link className="btn btn-secondary" to={`/item/${id}`}>
+      <div className="card-body ">
+        <h6 className="card-title">{name}</h6>
+        <h3>{`$${price}`}</h3>
+      </div>
+      <div className="card-body ">
+        <ItemCount stock={1} handleOnAdd={0} />
+        <Link className="btn btn-primary" to={`/item/${id}`}>
           ver detalles
         </Link>
       </div>

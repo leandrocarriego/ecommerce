@@ -14,11 +14,13 @@ const ItemCount = ({stock, handleOnAdd}) => {
 
 
   return (
-    <div>
-      <h2>{count}</h2>
-      <button onClick={decrement}>-</button>
-      <button onClick={increment}>+</button>
-      <button onClick={() => handleOnAdd(count)} disabled={stock === 0}>Agregar al carrito</button>
+    <div className='m-2'>
+      <div className='d-flex justify-content-evenly align-items-center w-100'>
+        <button className="btn btn-dark" onClick={decrement}>-</button>
+        <h3>{count}</h3>
+        <button className="btn btn-dark" onClick={increment}>+</button>
+      </div>
+      <button className="btn btn-success" onClick={() => handleOnAdd(count)} disabled={stock === 0}>Agregar al carrito</button>
     </div>
   )
 }
