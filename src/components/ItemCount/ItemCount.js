@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 
-const ItemCount = ({stock, handleOnAdd}) => {
+const ItemCount = ({handleOnAdd, stock}) => {
     const [ count, setCount ] = useState(1)
 
     const increment = () => {
@@ -15,7 +15,7 @@ const ItemCount = ({stock, handleOnAdd}) => {
 
   return (
     <div className='m-2'>
-      <div className='d-flex justify-content-evenly align-items-center w-100'>
+      <div className='d-flex justify-content-evenly align-items-center w-100 py-3'>
         <button className="btn btn-dark" onClick={decrement}>-</button>
         <h3>{count}</h3>
         <button className="btn btn-dark" onClick={increment}>+</button>

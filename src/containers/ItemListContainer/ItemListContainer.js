@@ -38,16 +38,16 @@ const ItemListContainer = ({ title }) => {
   }, [categoryId]);
 
   if(loading) {
-    return <h1>Cargando...</h1>
+    return <h1 className="text-white">Cargando...</h1>
   }
 
   if(products && products.length === 0) {
-    return <h1>No hay productos</h1>
+    return <h1 className="text-white">No hay productos</h1>
   }
   
   return (
     <>
-      <h2>{categoryId ? categoryId : title}</h2>
+      <h2 className="text-white">{categoryId ? categoryId : title}</h2>
       <ItemList products={products}/>
     </>
   );

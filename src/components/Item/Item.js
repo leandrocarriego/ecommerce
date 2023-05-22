@@ -9,12 +9,9 @@ const Item = ({ id, name, price, img }) => {
       <div className="h-50 d-flex justify-content-center align-items-center bg-white">
         <img className="card-img-top " src={img} alt={name} />
       </div>
-      <div className="card-body ">
-        <h6 className="card-title">{name}</h6>
-        <h3>{`$${price}`}</h3>
-      </div>
-      <div className="card-body ">
-        <ItemCount stock={1} handleOnAdd={0} />
+      <div className="card-body h-50 d-flex flex-column justify-content-center align-items-center">
+        <h4 className="card-title p-3">{name}</h4>
+        <h3 className="p-3">{`$${price}`}</h3>
         <Link className="btn btn-primary" to={`/item/${id}`}>
           ver detalles
         </Link>
