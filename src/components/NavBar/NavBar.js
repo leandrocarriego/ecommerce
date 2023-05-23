@@ -5,13 +5,13 @@ import CartWidget from "../CartWidget/CartWidget";
 const NavBar = () => {
   return (
     <>
-      <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
+      <nav className="navbar navbar-expand-lg bg-light">
+        <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             <h2 className="brand">Ecommerce</h2>
           </Link>
           <button
-            class="navbar-toggler"
+            className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent"
@@ -19,11 +19,11 @@ const NavBar = () => {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item">
                 <NavLink
                   to="/category/guitarras"
                   className={({ isActive }) =>
@@ -33,7 +33,7 @@ const NavBar = () => {
                   Guitarras
                 </NavLink>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink
                   to="/category/pianos"
                   className={({ isActive }) =>
@@ -43,7 +43,7 @@ const NavBar = () => {
                   Pianos
                 </NavLink>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink
                   to="/category/saxofones"
                   className={({ isActive }) =>
