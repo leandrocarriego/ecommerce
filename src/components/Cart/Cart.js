@@ -17,7 +17,7 @@ const Cart = () => {
     <div className="text-white vh-100">
       <h2>Carrito</h2>
       {totalItems == 0 ? (
-        <h3>No hay productos en el carrito: </h3>
+        <h3>No hay productos en el carrito</h3>
       ) : (
         <div className="d-flex flex-column justify-content-center align-items-center w-50 mx-auto">
           <h3>Productos en el carrito: </h3>
@@ -47,8 +47,6 @@ const Cart = () => {
               Vaciar carrito
               </button>
             </div>
-          
-          
         </div>
       )}
     </div>

@@ -1,56 +1,142 @@
 import React from "react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "../../context/CartContext";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import {
+  getDocs,
+  collection,
+  documentId,
+  query,
+  where,
+  writeBatch,
+  addDoc,
+} from "firebase/firestore";
+import { db } from "../../services/firebase/firebaseConfig";
 
 const Checkout = () => {
-  const { cart, totalPrice } = useContext(CartContext);
+  const [orderId, setOrderId] = useState("");
+  const [buyerInput, setBuyerInput] = useState({
+    name: "",
+    phone: 0,
+    direction: "",
+  });
 
-  const handleConfirm = (userData) => {
+  const { cart, totalPrice, totalItems } = useContext(CartContext);
+
+  const handleOnChangeName = (e) => {
+    setBuyerInput({ ...buyerInput, name: e.target.value });
+  };
+
+  const handleOnChangePhone = (e) => {
+    setBuyerInput({ ...buyerInput, phone: e.target.value });
+  };
+
+  const handleOnChangeDirection = (e) => {
+    setBuyerInput({ ...buyerInput, direction: e.target.value });
+  };
+
+
+  const handleConfirm = async (e) => {
+    e.preventDefault();
     const objOrder = {
-      buyer: {
-        name: "",
-        phone: 1,
-        direction: "",
-      },
+      buyer: buyerInput,
       items: cart,
-      total: totalPrice,
+      total: totalPrice(),
     };
-    const db = getFirestore();
-    const ordersColection = collection(db, "orders");
-    addDoc(ordersColection, objOrder).then(({ id }) => setOrderId(id));
-    console.log(objOrder);
+
+    const idsInCart = cart.map((product) => product.id);
+
+    const productsRef = query(
+      collection(db, "products"),
+      where(documentId(), "in", idsInCart)
+    );
+
+    const productsAddedFromFirestore = await getDocs(productsRef);
+
+    const { docs } = productsAddedFromFirestore;
+
+    const batch = writeBatch(db);
+    const outOfStock = [];
+
+    docs.forEach(async (doc) => {
+      const dataDoc = doc.data();
+      const stockDb = dataDoc.stock;
+
+      const productAddeToCart = cart.find((product) => product.id === doc.id);
+      const productQuantity = productAddeToCart?.quantity;
+
+      if (stockDb >= productQuantity) {
+        batch.update(doc.ref, { stock: stockDb - productQuantity });
+      } else {
+        outOfStock.push({ id: doc, ...dataDoc });
+      }
+
+      if (outOfStock.length === 0) {
+        batch.commit();
+
+        const orderRef = collection(db, "orders");
+
+        const orderAdded = await addDoc(orderRef, objOrder);
+
+        setOrderId(orderAdded.id);
+      } else {
+        console.log("Hay productos sin stock disponible");
+      }
+    });
   };
 
   return (
     <div className="text-white vh-100">
       <h2>Checkout</h2>
-      <form onConfirm={handleConfirm} className="text-white w-50 mx-auto">
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Email address
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-          />
+      {orderId ? (
+        <div>
+          <h3>¡Su compra se realizo con exito!</h3>
+          <h3>El codigo de su compra es: {orderId}</h3>
         </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="exampleInputPassword1"
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Comprar
-        </button>
-      </form>
+      ) : totalItems === 0 ? (
+        <h3>No hay productos en el carrito</h3>
+      ) : (
+        <form onSubmit={handleConfirm} className="text-white w-50 mx-auto">
+          <div className="mb-3">
+            <label htmlFor="inputName" className="form-label">
+              Nombre:
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="inputName"
+              value={buyerInput.name}
+              onChange={handleOnChangeName}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="inputPhone" className="form-label">
+              Telefono:
+            </label>
+            <input
+              type="tel"
+              className="form-control"
+              id="inputPhone"
+              value={buyerInput.phone}
+              onChange={handleOnChangePhone}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="inputDirection" className="form-label">
+              Direccion:
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="inputDirection"
+              value={buyerInput.direction}
+              onChange={handleOnChangeDirection}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Comprar
+          </button>
+        </form>
+      )}
     </div>
   );
 };
